@@ -1,14 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
 import BoxOffice from './pages/BoxOffice';
 import ShowingMovie from './pages/ShowingMovie';
 import ReleasedMovie from './pages/ReleasedMovie';
-
-const Cont = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: tomato;
-`;
+import Footer from './common/Footer';
 
 function App() {
   return (
@@ -20,6 +14,7 @@ function App() {
           <Route path="/box-office" element={<BoxOffice />} />
         </Routes>
       </div>
+      <Footer></Footer>
     </BrowserRouter>
   );
 }
