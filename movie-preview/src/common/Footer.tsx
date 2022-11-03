@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import twitterImg from '../assets/sns/twitter.png';
 import instagramImg from '../assets/sns/instagram.png';
 import facebookImg from '../assets/sns/facebook.png';
+import { IR } from '../style/util';
 
 const FooterCont = styled.footer`
   background: #f2f2f2;
@@ -15,13 +16,8 @@ const FooterSection = styled.section`
   margin: 0 auto;
 `;
 
-const IR = styled.h1`
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+const SectionHeader = styled.h1`
+  ${IR}
 `;
 
 const FooterTitle = styled.strong`
@@ -42,6 +38,10 @@ const InfoTitle = styled.dt`
   display: inline-block;
   font-weight: 700;
   margin-right: 5px;
+
+  &.ir {
+    ${IR}
+  }
 `;
 
 const InfoContent = styled.dd`
@@ -60,6 +60,10 @@ const InfoContent = styled.dd`
   &:last-child::after {
     display: none;
   }
+`;
+
+const SNSListInfo = styled.em`
+  ${IR}
 `;
 
 const SNSList = styled.ul`
@@ -113,14 +117,14 @@ const Footer = () => {
   return (
     <FooterCont>
       <FooterSection>
-        <IR as={'h2'}>기업 정보</IR>
+        <SectionHeader as={'h2'}>기업 정보</SectionHeader>
         <FooterTitle>Jungle Cinema</FooterTitle>
         <InfoList>
-          <IR as={'dt'}>사명</IR>
+          <InfoTitle className="ir">사명</InfoTitle>
           <InfoContent>(주)정글 시네마</InfoContent>
 
           <InfoTitle>대표</InfoTitle>
-          <InfoContent>라이캣</InfoContent>
+          <InfoContent>신윤철</InfoContent>
 
           <InfoTitle>사업자번호</InfoTitle>
           <InfoContent>010-1234-5678</InfoContent>
@@ -129,7 +133,7 @@ const Footer = () => {
           <InfoTitle>주소</InfoTitle>
           <InfoContent>경기도 성남시</InfoContent>
         </InfoList>
-        <IR as={'em'}>sns 링크 목록</IR>
+        <SNSListInfo as={'em'}>sns 링크 목록</SNSListInfo>
         <SNSList>
           <SNSItem>
             <SNSLink className="twitter">트위터</SNSLink>

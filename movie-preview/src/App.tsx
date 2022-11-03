@@ -7,13 +7,11 @@ import Footer from './common/Footer';
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<ShowingMovie />} />
-          <Route path="/released" element={<ReleasedMovie />} />
-          <Route path="/box-office" element={<BoxOffice />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<ShowingMovie />} />
+        <Route path="/released" element={<ReleasedMovie />} />
+        <Route path="/box-office" element={<BoxOffice />} />
+      </Routes>
       <Footer></Footer>
     </BrowserRouter>
   );
