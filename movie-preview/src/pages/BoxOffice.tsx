@@ -1,5 +1,7 @@
+import MainCont from '../common/MainCont';
+
 const BoxOffice = () => {
-  return <div>박스 오피스</div>;
+  return <MainCont />;
 };
 
 export default BoxOffice;

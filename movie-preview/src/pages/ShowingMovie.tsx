@@ -1,5 +1,7 @@
+import MainCont from '../common/MainCont';
+
 const ShowingMovie = () => {
-  return <div>개봉중인 영화</div>;
+  return <MainCont />;
 };
 
 export default ShowingMovie;
