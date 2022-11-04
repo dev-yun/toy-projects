@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import styled from 'styled-components';
+import MovieCont from '../components/MovieCont';
 import { IR } from '../style/util';
 import Header from './Header';
 
@@ -30,6 +31,7 @@ const MainCont = () => {
       <MainContainer>
         <ContainerTitle>정글 시네마 영화 목록</ContainerTitle>
         <Header></Header>
+        <MovieCont></MovieCont>
       </MainContainer>
     </Fragment>
   );
