@@ -10,7 +10,7 @@ const MovieItems = styled.li`
   border: 1px solid #bdbdbd;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  margin: 24px 12px 0;
+  margin: 24px 10px 0;
 `;
 
 const MovieWrapper = styled.article`
@@ -110,7 +110,7 @@ const ReservationLink = styled.a`
   text-decoration: none;
   color: black;
   &::after {
-    display: inline-block;
+    display: block;
     float: right;
     content: '';
     width: 1px;
@@ -149,7 +149,7 @@ const MovieItem = ({ item }: movieProps) => {
     <MovieItems>
       <MovieWrapper>
         <ItemDetail>영화 상세 정보</ItemDetail>
-        <ItemLink href="www.naver.com" className="link-movie">
+        <ItemLink href="#none" className="link-movie">
           <ItemLinkText>영화 상세페이지로 이동</ItemLinkText>
           <ItemLinkImg
             src={'/asset/poster/' + item.image}
