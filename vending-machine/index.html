@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reset.css" />
+    <title>Vending Machine</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <h1 class="header-logo">
+        <img src="/images/logo.png" alt="메인 로고(콜라콜라)" />
+      </h1>
+    </header>
+    <main class="main-container">
+      <section class="purchase-section">
+        <h2 class="ir_wa">자판기</h2>
+        <ul class="wrapper cola-list"></ul>
+        <div class="wrapper controls">
+          <p class="change base-font-normal_14">
+            잔액 : <strong class="balance">0원</strong>
+          </p>
+          <button class="change-button button-design base-font-normal_13">
+            거스름돈 반환
+          </button>
+          <input
+            type="number"
+            class="deposit-money base-font-normal_14"
+            placeholder="입금액 입력"
+            min="1000"
+            step="1000"
+          />
+          <button
+            class="deposit-money-button button-design base-font-normal_14"
+          >
+            입금
+          </button>
+          <ul class="selected-cola-list scroll_custom"></ul>
+          <button class="gain-button base-font-normal_13">획득</button>
+        </div>
+      </section>
+      <section class="result-section">
+        <h2 class="ir_wa">소지금과 획득한 음료 목록</h2>
+        <div class="rest-cash-box wrapper">
+          <p class="rest-cash base-font-normal_14">
+            소지금 :
+            <strong class="pocket-money base-font-normal_14_bold"
+              >25000원</strong
+            >
+          </p>
+        </div>
+        <article class="purchased-cola-article wrapper">
+          <h3 class="purchased-cola-title base-font-normal_14_bold">
+            획득한 음료
+          </h3>
+          <ul class="purchased-cola-list scroll_custom"></ul>
+          <p class="base-font-normal">
+            총금액 : <strong class="total-price">0원</strong>
+          </p>
+        </article>
+      </section>
+    </main>
+    <!-- <script type="module" src="/dist/index.js"></script> -->
+    <script src="/dist/colaItem.js"></script>
+  </body>
+</html>
