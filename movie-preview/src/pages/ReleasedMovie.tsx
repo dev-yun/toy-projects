@@ -1,7 +1,7 @@
 import MainCont from '../common/MainCont';
 
 const ReleasedMovie = () => {
-  return <MainCont />;
+  return <div>RELEASED</div>;
 };
 
 export default ReleasedMovie;
