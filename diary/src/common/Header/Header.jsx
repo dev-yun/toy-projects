@@ -11,7 +11,9 @@ const StyledHeader = styled.header`
   border-bottom: 1px solid #e2e2e2;
 `;
 
-const HeaderText = styled.p``;
+const HeaderText = styled.p`
+  font-size: 1.2rem;
+`;
 
 function Header({ headText }) {
   return (
