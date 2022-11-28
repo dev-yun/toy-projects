@@ -9,7 +9,7 @@ import New from './pages/New';
 const Wrapper = styled.div`
   background-color: white;
   min-height: 100vh;
-  padding: 10px 20px;
+  padding: 0px 20px;
 
   box-sizing: border-box;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

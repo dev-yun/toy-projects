@@ -18,5 +18,6 @@ module.exports = {
   rules: {
     'react/destructuring-assignment': [0, 'always'],
     'react/prop-types': ['off'],
+    'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
   },
 };
