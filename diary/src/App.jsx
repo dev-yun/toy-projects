@@ -15,12 +15,13 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
-  @media (min-width: 510px) {
-    width: 500px;
+  @media (min-width: 610px) {
+    width: 600px;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 610px) {
     width: 90vw;
+    min-width: 500px;
   }
 `;
 
@@ -54,10 +55,38 @@ const reducer = (state, action) => {
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+const dummyData = [
+  {
+    id: 1,
+    emotion: 3,
+    content: '더미 1',
+    date: 1669681351306,
+  },
+  {
+    id: 2,
+    emotion: 1,
+    content: '더미 2',
+    date: 1669681551306,
+  },
+  {
+    id: 3,
+    emotion: 5,
+    content:
+      '더미 3asd더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as더미 3as',
+    date: 1669681301306,
+  },
+  {
+    id: 4,
+    emotion: 4,
+    content: '더미 4',
+    date: 1669681251306,
+  },
+];
 
-  const onCreate = (date, content, emotion) => {
+function App() {
+  const [data, dispatch] = useReducer(reducer, dummyData);
+
+  const onCreate = ({ date, content, emotion }) => {
     dispatch({
       type: 'CREATE',
       data: {
