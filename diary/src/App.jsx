@@ -105,7 +105,7 @@ function App() {
     });
   };
 
-  const onEdit = (targetId, date, content, emotion) => {
+  const onEdit = ({ targetId, date, content, emotion }) => {
     dispatch({
       type: 'EDIT',
       data: {

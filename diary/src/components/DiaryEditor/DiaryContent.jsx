@@ -16,7 +16,7 @@ const StyledTextArea = styled.textarea`
   border-radius: 5px;
 `;
 
-function DiaryContent({ handleContent, contentRef }) {
+function DiaryContent({ handleContent, contentRef, content }) {
   const handleChangeContent = e => {
     handleContent(e.target.value);
   };
@@ -26,6 +26,7 @@ function DiaryContent({ handleContent, contentRef }) {
       <h3>오늘의 일기</h3>
       <StyledTextArea
         ref={contentRef}
+        value={content}
         placeholder="오늘은 어땠나요??"
         onChange={handleChangeContent}
       />

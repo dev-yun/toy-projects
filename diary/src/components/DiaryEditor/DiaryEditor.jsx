@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { DiaryDispatchContext } from '../../App';
@@ -42,7 +42,7 @@ const getStringDate = date => {
   return `${year}-${month}-${day}`;
 };
 
-function DiaryEditor() {
+function DiaryEditor({ isEdit, originData }) {
   const navigate = useNavigate();
   const contentRef = useRef();
   const [newDiary, setNewDiary] = useState({
@@ -50,7 +50,7 @@ function DiaryEditor() {
     emotion: 3,
     content: '',
   });
-  const { onCreate } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
 
   const handleDate = date => {
     setNewDiary({
@@ -78,20 +78,53 @@ function DiaryEditor() {
   const handleSubmit = () => {
     if (newDiary.content.length < 1) {
       contentRef.current.focus();
-    } else {
-      onCreate(newDiary);
-      navigate('/', { replace: true });
+      return;
+    }
+
+    if (
+      window.confirm(
+        !isEdit
+          ? '새로운 일기를 작성하시겠습니까?'
+          : '일기를 수정하시겠습니까?',
+      )
+    ) {
+      if (!isEdit) {
+        onCreate(newDiary);
+        navigate('/', { replace: true });
+      } else {
+        onEdit({ targetId: originData.id, ...newDiary });
+        navigate('/');
+      }
     }
   };
+
+  // Edit 부분
+  useEffect(() => {
+    if (isEdit) {
+      setNewDiary({
+        date: getStringDate(new Date(originData.date)),
+        emotion: originData.emotion,
+        content: originData.content,
+      });
+    }
+  }, [isEdit, originData]);
 
   return (
     <StyledMain>
       <Calendar handleDate={handleDate} date={newDiary.date} />
       <Emotion handleEmotion={handleEmotion} emotionId={newDiary.emotion} />
-      <DiaryContent handleContent={handleContent} contentRef={contentRef} />
+      <DiaryContent
+        handleContent={handleContent}
+        contentRef={contentRef}
+        content={newDiary.content}
+      />
       <Wrapper>
         <Button text="취소하기" onClick={goPrevious} />
-        <Button text="저장하기" onClick={handleSubmit} type="positive" />
+        <Button
+          text={!isEdit ? '저장하기' : '수정하기'}
+          onClick={handleSubmit}
+          type="positive"
+        />
       </Wrapper>
     </StyledMain>
   );
