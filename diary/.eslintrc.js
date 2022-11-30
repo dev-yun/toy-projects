@@ -25,5 +25,6 @@ module.exports = {
     'no-useless-concat': 'off',
     'react/no-unknown-property': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'no-alert': 'off',
   },
 };
