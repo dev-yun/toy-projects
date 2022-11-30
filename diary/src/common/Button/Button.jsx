@@ -33,6 +33,8 @@ const StyleButton = styled.button`
   ${props => getButtonColor(props)}
   padding: 10px 20px;
   white-space: nowrap;
+
+  font-family: LINESeedKR-Bd;
 `;
 
 function Button({ text, type, onClick }) {
