@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { DiaryDispatchContext } from '../../App';
 import Button from '../../common/Button/Button';
+import getStringDate from '../../utils/date';
 import Calendar from './Calendar';
 import DiaryContent from './DiaryContent';
 import Emotion from './Emotion';
@@ -25,22 +26,6 @@ const Wrapper = styled.div`
 
   margin-top: 30px;
 `;
-
-const getStringDate = date => {
-  const year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-
-  if (month < 10) {
-    month = `0${month}`;
-  }
-
-  if (day < 10) {
-    day = `0${day}`;
-  }
-
-  return `${year}-${month}-${day}`;
-};
 
 function DiaryEditor({ isEdit, originData }) {
   const navigate = useNavigate();

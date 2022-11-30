@@ -1,36 +1,10 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { DiaryDispatchContext } from '../../App';
 import Button from '../../common/Button/Button';
 import { slEllipsis } from '../../styles/util';
-
-const getWrapperBackgroundColor = emotion => {
-  let wrapperBackground;
-
-  switch (emotion) {
-    case 1:
-      wrapperBackground = '#64c964';
-      break;
-    case 2:
-      wrapperBackground = '#9dd772';
-      break;
-    case 3:
-      wrapperBackground = '#fdce17';
-      break;
-    case 4:
-      wrapperBackground = '#fd8446';
-      break;
-    case 5:
-      wrapperBackground = '#fd565f';
-      break;
-    default:
-      wrapperBackground = '#ececec';
-  }
-  return css`
-    background-color: ${wrapperBackground};
-  `;
-};
+import getWrapperBackgroundColor from '../../utils/wrapperBackgroundColor';
 
 const StyledItem = styled.li`
   display: flex;
