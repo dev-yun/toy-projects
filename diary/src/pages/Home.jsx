@@ -12,6 +12,11 @@ function Home() {
   const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
 
   useEffect(() => {
+    const titleEl = document.querySelector('title');
+    titleEl.innerHTML = `감정 일기장`;
+  }, []);
+
+  useEffect(() => {
     if (diaryList.length < 0) {
       return;
     }
