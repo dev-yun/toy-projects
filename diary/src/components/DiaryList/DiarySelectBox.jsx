@@ -27,4 +27,4 @@ function DiarySelectBox({ value, handleOption, optionList }) {
   );
 }
 
-export default DiarySelectBox;
+export default React.memo(DiarySelectBox);

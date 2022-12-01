@@ -43,4 +43,4 @@ function EmotionItem({
   );
 }
 
-export default EmotionItem;
+export default React.memo(EmotionItem);
