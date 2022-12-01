@@ -23,7 +23,6 @@ const StyledMain = styled.main`
 `;
 
 function DiaryDetail({ originData }) {
-  console.log(originData);
   return (
     <StyledMain>
       <DetailEmotion emotion={originData.emotion} />

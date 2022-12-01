@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import shortid from 'shortid';
 import styled from 'styled-components';
@@ -39,6 +39,7 @@ const reducer = (state, action) => {
       newState = state.map(item =>
         item.id === action.data.id ? { ...action.data } : item,
       );
+
       break;
     }
     case 'REMOVE': {

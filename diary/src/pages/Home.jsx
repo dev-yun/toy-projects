@@ -12,7 +12,7 @@ function Home() {
   const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
 
   useEffect(() => {
-    if (diaryList.length <= 1) {
+    if (diaryList.length < 0) {
       return;
     }
     const firstDay = new Date(
