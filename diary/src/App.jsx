@@ -39,7 +39,6 @@ const reducer = (state, action) => {
       newState = state.map(item =>
         item.id === action.data.id ? { ...action.data } : item,
       );
-
       break;
     }
     case 'REMOVE': {
@@ -50,6 +49,7 @@ const reducer = (state, action) => {
       return state;
   }
 
+  localStorage.setItem('diary', JSON.stringify(newState));
   return newState;
 };
 
@@ -58,6 +58,15 @@ export const DiaryDispatchContext = React.createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
+
+  useEffect(() => {
+    const localData = localStorage.getItem('diary');
+    if (localData) {
+      const diaryList = JSON.parse(localData);
+
+      dispatch({ type: 'INIT', data: diaryList });
+    }
+  }, []);
 
   const onCreate = ({ date, content, emotion }) => {
     dispatch({

@@ -32,7 +32,6 @@ function Diary() {
   const goEdit = () => {
     navigate(`/edit/${originData.id}`);
   };
-  console.log(originData);
 
   if (!originData) {
     return <div>로딩중입니다...</div>;
@@ -46,6 +45,7 @@ function Diary() {
         rightBtnText="수정하기"
         leftBtnClick={goPrevious}
         rightBtnClick={goEdit}
+        rightBtnType="positive"
       />
       <DiaryDetail originData={originData} />
     </>

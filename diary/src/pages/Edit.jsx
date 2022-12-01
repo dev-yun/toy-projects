@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DiaryStateContext } from '../App';
+import { DiaryDispatchContext, DiaryStateContext } from '../App';
 import Header from '../common/Header/Header';
 import DiaryEditor from '../components/DiaryEditor/DiaryEditor';
 
@@ -10,6 +10,7 @@ function Edit() {
   const [originData, setOriginData] = useState();
 
   const diaryList = useContext(DiaryStateContext);
+  const { onRemove } = useContext(DiaryDispatchContext);
 
   useEffect(() => {
     if (diaryList.length >= 1) {
@@ -29,7 +30,12 @@ function Edit() {
     navigate(-1);
   };
 
-  console.log(originData);
+  const removeDiary = () => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      onRemove(id);
+      navigate('/', { replace: true });
+    }
+  };
 
   return (
     <>
@@ -37,6 +43,9 @@ function Edit() {
         headText="일기 수정하기"
         leftBtnText="뒤로가기"
         leftBtnClick={goPrevious}
+        rightBtnText="삭제하기"
+        rightBtnClick={removeDiary}
+        rightBtnType="negative"
       />
       {originData && <DiaryEditor isEdit originData={originData} />}
     </>

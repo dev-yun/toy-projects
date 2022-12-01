@@ -30,15 +30,25 @@ function Header({
   rightBtnText,
   leftBtnClick,
   rightBtnClick,
+  leftBtnType,
+  rightBtnType,
 }) {
   return (
     <StyledHeader>
       {leftBtnText && (
-        <Button text={leftBtnText} onClick={() => leftBtnClick()} />
+        <Button
+          text={leftBtnText}
+          type={leftBtnType}
+          onClick={() => leftBtnClick()}
+        />
       )}
       <HeaderText>{headText}</HeaderText>
       {rightBtnText ? (
-        <Button text={rightBtnText} onClick={() => rightBtnClick()} />
+        <Button
+          text={rightBtnText}
+          type={rightBtnType}
+          onClick={() => rightBtnClick()}
+        />
       ) : (
         <EmptyBox />
       )}
