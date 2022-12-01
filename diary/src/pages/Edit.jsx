@@ -13,6 +13,11 @@ function Edit() {
   const { onRemove } = useContext(DiaryDispatchContext);
 
   useEffect(() => {
+    const titleEl = document.querySelector('title');
+    titleEl.innerHTML = `감정 일기장 - 수정`;
+  }, []);
+
+  useEffect(() => {
     if (diaryList.length >= 1) {
       const targetDiary = diaryList.find(
         item => String(item.id) === String(id),

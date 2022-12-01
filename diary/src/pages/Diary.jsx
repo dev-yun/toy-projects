@@ -13,6 +13,11 @@ function Diary() {
   const diaryList = useContext(DiaryStateContext);
 
   useEffect(() => {
+    const titleEl = document.querySelector('title');
+    titleEl.innerHTML = `감정 일기장 - 상세보기`;
+  }, []);
+
+  useEffect(() => {
     if (diaryList.length >= 1) {
       const targetDiary = diaryList.find(
         item => String(item.id) === String(id),
