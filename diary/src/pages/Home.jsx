@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { DiaryStateContext } from '../App';
-
+import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import Header from '../common/Header/Header';
 import DiaryList from '../components/DiaryList/DiaryList';
+import diaryListState from '../store/recoilDiaryListState';
 
 function Home() {
-  const diaryList = useContext(DiaryStateContext);
+  const diaryList = useRecoilValue(diaryListState);
 
   const [data, setData] = useState([]);
   const [curDate, setCurDate] = useState(new Date());

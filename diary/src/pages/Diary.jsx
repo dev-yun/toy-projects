@@ -1,16 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DiaryStateContext } from '../App';
 import Header from '../common/Header/Header';
 import DiaryDetail from '../components/DiaryDetail/DiaryDetail';
 import getStringDate from '../utils/date';
+import diaryListState from '../store/recoilDiaryListState';
 
 function Diary() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [originData, setOriginData] = useState();
 
-  const diaryList = useContext(DiaryStateContext);
+  const diaryList = useRecoilValue(diaryListState);
 
   useEffect(() => {
     const titleEl = document.querySelector('title');
@@ -30,6 +31,7 @@ function Diary() {
       }
     }
   }, [id, diaryList]);
+
   const goPrevious = () => {
     navigate(-1);
   };

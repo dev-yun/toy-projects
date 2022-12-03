@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import shortid from 'shortid';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Diary from './pages/Diary';
 import Edit from './pages/Edit';
 import Home from './pages/Home';
 import New from './pages/New';
+import diaryListState from './store/recoilDiaryListState';
 
 const Wrapper = styled.div`
   background-color: white;
@@ -25,104 +26,28 @@ const Wrapper = styled.div`
   }
 `;
 
-const reducer = (state, action) => {
-  let newState = [];
-  switch (action.type) {
-    case 'INIT': {
-      return action.data;
-    }
-    case 'CREATE': {
-      newState = [action.data, ...state];
-      break;
-    }
-    case 'EDIT': {
-      newState = state.map(item =>
-        item.id === action.data.id ? { ...action.data } : item,
-      );
-      break;
-    }
-    case 'REMOVE': {
-      newState = state.filter(item => item.id !== action.targetId);
-      break;
-    }
-    default:
-      return state;
-  }
-
-  localStorage.setItem('diary', JSON.stringify(newState));
-  return newState;
-};
-
-export const DiaryStateContext = React.createContext();
-export const DiaryDispatchContext = React.createContext();
-
 function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+  const setDiaryList = useSetRecoilState(diaryListState);
 
   useEffect(() => {
     const localData = localStorage.getItem('diary');
     if (localData) {
       const diaryList = JSON.parse(localData);
-
-      dispatch({ type: 'INIT', data: diaryList });
+      setDiaryList(diaryList);
     }
   }, []);
 
-  const onCreate = ({ date, content, emotion }) => {
-    dispatch({
-      type: 'CREATE',
-      data: {
-        id: shortid.generate(),
-        date: new Date(date).getTime(),
-        content,
-        emotion,
-      },
-    });
-  };
-
-  const onRemove = targetId => {
-    dispatch({
-      type: 'REMOVE',
-      targetId,
-    });
-  };
-
-  const onEdit = ({ targetId, date, content, emotion }) => {
-    dispatch({
-      type: 'EDIT',
-      data: {
-        id: targetId,
-        date: new Date(date).getTime(),
-        content,
-        emotion,
-      },
-    });
-  };
-
-  const diaryDispatch = useMemo(
-    () => ({
-      onCreate,
-      onEdit,
-      onRemove,
-    }),
-    [data],
-  );
-
   return (
-    <DiaryStateContext.Provider value={data}>
-      <DiaryDispatchContext.Provider value={diaryDispatch}>
-        <BrowserRouter>
-          <Wrapper>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/new" element={<New />} />
-              <Route path="/diary/:id" element={<Diary />} />
-              <Route path="/edit/:id" element={<Edit />} />
-            </Routes>
-          </Wrapper>
-        </BrowserRouter>
-      </DiaryDispatchContext.Provider>
-    </DiaryStateContext.Provider>
+    <BrowserRouter>
+      <Wrapper>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/new" element={<New />} />
+          <Route path="/diary/:id" element={<Diary />} />
+          <Route path="/edit/:id" element={<Edit />} />
+        </Routes>
+      </Wrapper>
+    </BrowserRouter>
   );
 }
 

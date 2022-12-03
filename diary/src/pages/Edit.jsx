@@ -1,16 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DiaryDispatchContext, DiaryStateContext } from '../App';
 import Header from '../common/Header/Header';
 import DiaryEditor from '../components/DiaryEditor/DiaryEditor';
+import diaryListState from '../store/recoilDiaryListState';
 
 function Edit() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [originData, setOriginData] = useState();
 
-  const diaryList = useContext(DiaryStateContext);
-  const { onRemove } = useContext(DiaryDispatchContext);
+  const [diaryList, setDiaryList] = useRecoilState(diaryListState);
+
+  const onRemove = targetId => {
+    const newDiaryList = diaryList.filter(item => item.id !== targetId);
+    setDiaryList(newDiaryList);
+    localStorage.setItem('diary', JSON.stringify(newDiaryList));
+  };
 
   useEffect(() => {
     const titleEl = document.querySelector('title');

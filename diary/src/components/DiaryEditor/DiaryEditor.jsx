@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { DiaryDispatchContext } from '../../App';
+import shortid from 'shortid';
 import Button from '../../common/Button/Button';
-import getStringDate from '../../utils/date';
+import diaryListState from '../../store/recoilDiaryListState';
 import Calendar from './Calendar';
 import DiaryContent from './DiaryContent';
 import Emotion from './Emotion';
@@ -30,12 +31,27 @@ const Wrapper = styled.div`
 function DiaryEditor({ isEdit, originData }) {
   const navigate = useNavigate();
   const contentRef = useRef();
+  const [diaryList, setDiaryList] = useRecoilState(diaryListState);
   const [newDiary, setNewDiary] = useState({
-    date: getStringDate(new Date()),
+    id: shortid.generate(),
+    date: new Date().getTime(),
     emotion: 3,
     content: '',
   });
-  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
+
+  const onCreate = newItem => {
+    const newDiaryList = [newItem, ...diaryList];
+    setDiaryList(newDiaryList);
+    localStorage.setItem('diary', JSON.stringify(newDiaryList));
+  };
+
+  const onEdit = newItem => {
+    const newDiaryList = diaryList.map(item =>
+      item.id === newItem.id ? newItem : item,
+    );
+    setDiaryList(newDiaryList);
+    localStorage.setItem('diary', JSON.stringify(newDiaryList));
+  };
 
   const handleDate = date => {
     setNewDiary({
@@ -77,7 +93,7 @@ function DiaryEditor({ isEdit, originData }) {
         onCreate(newDiary);
         navigate('/', { replace: true });
       } else {
-        onEdit({ targetId: originData.id, ...newDiary });
+        onEdit({ id: originData.id, ...newDiary });
         navigate('/');
       }
     }
@@ -87,7 +103,7 @@ function DiaryEditor({ isEdit, originData }) {
   useEffect(() => {
     if (isEdit) {
       setNewDiary({
-        date: getStringDate(new Date(originData.date)),
+        date: originData.date,
         emotion: originData.emotion,
         content: originData.content,
       });

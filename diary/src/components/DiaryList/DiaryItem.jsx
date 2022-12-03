@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { DiaryDispatchContext } from '../../App';
 import Button from '../../common/Button/Button';
 import { slEllipsis } from '../../styles/util';
 import getWrapperBackgroundColor from '../../utils/wrapperBackgroundColor';
+import diaryListState from '../../store/recoilDiaryListState';
 
 const StyledItem = styled.li`
   display: flex;
@@ -58,7 +59,13 @@ const ButtonWrapper = styled.div`
 function DiaryItem({ id, content, emotion, date }) {
   const navigate = useNavigate();
   const strDate = new Date(+date).toLocaleDateString();
-  const { onRemove } = useContext(DiaryDispatchContext);
+  const [diaryList, setDiaryList] = useRecoilState(diaryListState);
+
+  const onRemove = targetId => {
+    const newDiaryList = diaryList.filter(item => item.id !== targetId);
+    setDiaryList(newDiaryList);
+    localStorage.setItem('diary', JSON.stringify(newDiaryList));
+  };
 
   const goDiaryDetail = () => {
     navigate(`/diary/${id}`);

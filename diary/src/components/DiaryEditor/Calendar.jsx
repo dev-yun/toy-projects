@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import getStringDate from '../../utils/date';
 
 const DateInput = styled.input`
   border: none;
@@ -14,13 +15,22 @@ const DateInput = styled.input`
 
 function Calendar({ handleDate, date }) {
   const handleSelectedDate = e => {
-    handleDate(e.target.value);
+    const dateArray = e.target.value.split('-');
+    const year = dateArray[0];
+    const month = dateArray[1];
+    const day = dateArray[2];
+
+    handleDate(new Date(`${year},${month},${day}`).getTime());
   };
 
   return (
     <section>
       <h3>오늘은 언제인가요?</h3>
-      <DateInput value={date} onChange={handleSelectedDate} type="date" />
+      <DateInput
+        value={getStringDate(new Date(date))}
+        onChange={handleSelectedDate}
+        type="date"
+      />
     </section>
   );
 }
