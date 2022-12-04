@@ -1,5 +1,7 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { newEmotionState } from '../../store/recoilNewDiaryState';
 import emotionList from '../../utils/emotionImgList';
 import EmotionItem from './EmotionItem';
 
@@ -9,9 +11,11 @@ const StyleUl = styled.ul`
   gap: 2%;
 `;
 
-function Emotion({ handleEmotion, emotionId }) {
+function Emotion() {
+  const [newEmotion, setNewEmotion] = useRecoilState(newEmotionState);
+
   const handleSelectEmotion = emotion => {
-    handleEmotion(emotion);
+    setNewEmotion(emotion);
   };
 
   return (
@@ -23,7 +27,7 @@ function Emotion({ handleEmotion, emotionId }) {
             key={item.emotionId}
             {...item}
             handleSelectEmotion={handleSelectEmotion}
-            isSelected={item.emotionId === emotionId}
+            isSelected={item.emotionId === newEmotion}
           />
         ))}
       </StyleUl>
@@ -31,4 +35,4 @@ function Emotion({ handleEmotion, emotionId }) {
   );
 }
 
-export default Emotion;
+export default React.memo(Emotion);

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../common/Button/Button';
 import DiaryItem from './DiaryItem';
 import DiarySelectBox from './DiarySelectBox';
+import { filteredDiaryListState } from '../../store/recoilFilteredDiaryList';
 
 const OptionWrapper = styled.div`
   display: flex;
@@ -32,38 +34,9 @@ const filterOptionList = [
   { value: 'bad', name: '나쁜 감정' },
 ];
 
-function DiaryList({ diaryList }) {
-  const [sortType, setSortType] = useState('latest');
-  const [filterType, setFilterType] = useState('');
+function DiaryList() {
   const navigate = useNavigate();
-
-  const getSortedDiaryList = () => {
-    const compare = (a, b) => {
-      if (sortType === 'latest') {
-        return +b.date - +a.date;
-      }
-
-      return +a.date - +b.date;
-    };
-
-    const copyList = [...diaryList];
-    copyList.sort(compare);
-
-    switch (filterType) {
-      case 'all': {
-        return copyList;
-      }
-      case 'good': {
-        return copyList.filter(item => +item.emotion <= 3);
-      }
-      case 'bad': {
-        return copyList.filter(item => +item.emotion > 3);
-      }
-      default: {
-        return copyList;
-      }
-    }
-  };
+  const filteredDiaryList = useRecoilValue(filteredDiaryListState);
 
   const goNewDiary = () => {
     navigate(`/new`);
@@ -72,21 +45,13 @@ function DiaryList({ diaryList }) {
   return (
     <>
       <OptionWrapper>
-        <DiarySelectBox
-          value={sortType}
-          handleOption={setSortType}
-          optionList={sortOptionList}
-        />
-        <DiarySelectBox
-          value={filterType}
-          handleOption={setFilterType}
-          optionList={filterOptionList}
-        />
+        <DiarySelectBox optionList={sortOptionList} isSort />
+        <DiarySelectBox optionList={filterOptionList} />
         <Button text="새일기 쓰기" type="positive" onClick={goNewDiary} />
       </OptionWrapper>
 
       <ul>
-        {getSortedDiaryList().map(item => (
+        {filteredDiaryList.map(item => (
           <DiaryItem
             key={item.id}
             id={item.id}

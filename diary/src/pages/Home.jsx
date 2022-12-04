@@ -1,13 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { DiaryStateContext } from '../App';
-
+import React, { useEffect, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Header from '../common/Header/Header';
 import DiaryList from '../components/DiaryList/DiaryList';
+import diaryListState from '../store/recoilDiaryListState';
+import { dateFilteredDiaryListState } from '../store/recoilFilteredDiaryList';
 
 function Home() {
-  const diaryList = useContext(DiaryStateContext);
+  const diaryList = useRecoilValue(diaryListState);
+  const setDateFilteredDiaryList = useSetRecoilState(
+    dateFilteredDiaryListState,
+  );
 
-  const [data, setData] = useState([]);
   const [curDate, setCurDate] = useState(new Date());
   const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
 
@@ -20,6 +23,7 @@ function Home() {
     if (diaryList.length < 0) {
       return;
     }
+
     const firstDay = new Date(
       curDate.getFullYear(),
       curDate.getMonth(),
@@ -35,7 +39,7 @@ function Home() {
       59,
     ).getTime();
 
-    setData(
+    setDateFilteredDiaryList(
       diaryList.filter(item => firstDay <= item.date && item.date <= lastDay),
     );
   }, [curDate, diaryList]);
@@ -70,7 +74,7 @@ function Home() {
         rightBtnClick={increaseMonth}
       />
       <main>
-        <DiaryList diaryList={data} />
+        <DiaryList />
       </main>
     </>
   );
