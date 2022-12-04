@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { useEffect, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import shortid from 'shortid';
@@ -8,6 +8,11 @@ import diaryListState from '../../store/recoilDiaryListState';
 import Calendar from './Calendar';
 import DiaryContent from './DiaryContent';
 import Emotion from './Emotion';
+import {
+  newContentState,
+  newDateState,
+  newEmotionState,
+} from '../../store/recoilNewDiaryState';
 
 const StyledMain = styled.main`
   section {
@@ -32,12 +37,9 @@ function DiaryEditor({ isEdit, originData }) {
   const navigate = useNavigate();
   const contentRef = useRef();
   const [diaryList, setDiaryList] = useRecoilState(diaryListState);
-  const [newDiary, setNewDiary] = useState({
-    id: shortid.generate(),
-    date: new Date().getTime(),
-    emotion: 3,
-    content: '',
-  });
+  const [date, setDate] = useRecoilState(newDateState);
+  const [emotion, setEmotion] = useRecoilState(newEmotionState);
+  const [content, setContent] = useRecoilState(newContentState);
 
   const onCreate = newItem => {
     const newDiaryList = [newItem, ...diaryList];
@@ -53,34 +55,22 @@ function DiaryEditor({ isEdit, originData }) {
     localStorage.setItem('diary', JSON.stringify(newDiaryList));
   };
 
-  const handleDate = date => {
-    setNewDiary({
-      ...newDiary,
-      date,
-    });
-  };
-  const handleEmotion = emotion => {
-    setNewDiary({
-      ...newDiary,
-      emotion,
-    });
-  };
-  const handleContent = content => {
-    setNewDiary({
-      ...newDiary,
-      content,
-    });
-  };
-
   const goPrevious = () => {
     navigate(-1);
   };
 
   const handleSubmit = () => {
-    if (newDiary.content.length < 1) {
+    if (content.length < 1) {
       contentRef.current.focus();
       return;
     }
+
+    const newDiary = {
+      id: !isEdit ? shortid.generate() : originData.id,
+      date,
+      emotion,
+      content,
+    };
 
     if (
       window.confirm(
@@ -93,32 +83,29 @@ function DiaryEditor({ isEdit, originData }) {
         onCreate(newDiary);
         navigate('/', { replace: true });
       } else {
-        onEdit({ id: originData.id, ...newDiary });
+        onEdit(newDiary);
         navigate('/');
       }
     }
   };
 
-  // Edit 부분
   useEffect(() => {
     if (isEdit) {
-      setNewDiary({
-        date: originData.date,
-        emotion: originData.emotion,
-        content: originData.content,
-      });
+      setDate(originData.date);
+      setEmotion(originData.emotion);
+      setContent(originData.content);
+    } else {
+      setDate(new Date().getTime());
+      setEmotion(3);
+      setContent('');
     }
   }, [isEdit, originData]);
 
   return (
     <StyledMain>
-      <Calendar handleDate={handleDate} date={newDiary.date} />
-      <Emotion handleEmotion={handleEmotion} emotionId={newDiary.emotion} />
-      <DiaryContent
-        handleContent={handleContent}
-        contentRef={contentRef}
-        content={newDiary.content}
-      />
+      <Calendar />
+      <Emotion />
+      <DiaryContent contentRef={contentRef} />
       <Wrapper>
         <Button text="취소하기" onClick={goPrevious} />
         <Button

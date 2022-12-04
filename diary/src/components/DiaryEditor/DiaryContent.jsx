@@ -1,5 +1,7 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { newContentState } from '../../store/recoilNewDiaryState';
 
 const StyledTextArea = styled.textarea`
   font-family: LINESeedKR-Bd;
@@ -16,9 +18,11 @@ const StyledTextArea = styled.textarea`
   border-radius: 5px;
 `;
 
-function DiaryContent({ handleContent, contentRef, content }) {
+function DiaryContent({ contentRef }) {
+  const [newContent, setNewContent] = useRecoilState(newContentState);
+
   const handleChangeContent = e => {
-    handleContent(e.target.value);
+    setNewContent(e.target.value);
   };
 
   return (
@@ -26,7 +30,7 @@ function DiaryContent({ handleContent, contentRef, content }) {
       <h3>오늘의 일기</h3>
       <StyledTextArea
         ref={contentRef}
-        value={content}
+        value={newContent}
         placeholder="오늘은 어땠나요??"
         onChange={handleChangeContent}
       />
@@ -34,4 +38,4 @@ function DiaryContent({ handleContent, contentRef, content }) {
   );
 }
 
-export default DiaryContent;
+export default React.memo(DiaryContent);
