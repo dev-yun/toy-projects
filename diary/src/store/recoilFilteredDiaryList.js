@@ -1,5 +1,9 @@
 import { atom, selector } from 'recoil';
-import diaryListState from './recoilDiaryListState';
+
+export const dateFilteredDiaryListState = atom({
+  key: 'dateFilteredDiaryList',
+  default: [],
+});
 
 export const sortTypeState = atom({
   key: 'sortType',
@@ -16,7 +20,7 @@ export const filteredDiaryListState = selector({
   get: ({ get }) => {
     const filterType = get(filterTypeState);
     const sortType = get(sortTypeState);
-    const diaryList = get(diaryListState);
+    const diaryList = get(dateFilteredDiaryListState);
 
     const compare = (a, b) => {
       if (sortType === 'latest') {

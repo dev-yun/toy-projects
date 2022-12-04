@@ -21,7 +21,7 @@ module.exports = {
     'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
     'import/no-cycle': 'off',
     'no-console': 'off',
-    'no-unused-vars': 'off',
+    // 'no-unused-vars': 'off',
     'no-useless-concat': 'off',
     'react/no-unknown-property': 'off',
     'react/jsx-props-no-spreading': 'off',

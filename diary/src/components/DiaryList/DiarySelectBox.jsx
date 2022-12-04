@@ -19,7 +19,6 @@ const StyledSelect = styled.select`
 function DiarySelectBox({ optionList, isSort }) {
   const [sortType, setSortType] = useRecoilState(sortTypeState);
   const [filterType, setFilterType] = useRecoilState(filterTypeState);
-
   const handleOptionChange = e => {
     if (isSort) {
       setSortType(e.target.value);
