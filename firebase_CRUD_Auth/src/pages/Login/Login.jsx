@@ -1,10 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../hooks/useLogin';
 import styles from './Login.module.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login, error, isPending } = useLogin();
+  const navigate = useNavigate();
 
   const handleData = (event) => {
     if (event.target.type === 'email') {
@@ -16,6 +20,8 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    login(email, password);
+    !error && !isPending && navigate('/', { replace: true });
   };
 
   return (
@@ -41,9 +47,14 @@ function Login() {
           onChange={handleData}
         />
 
-        <button type="submit" className={styles.btn}>
-          로그인
-        </button>
+        {!isPending ? (
+          <button type="submit" className={styles.btn}>
+            로그인
+          </button>
+        ) : (
+          <strong>로그인이 진행중입니다...</strong>
+        )}
+        {error && <strong>{error}</strong>}
       </fieldset>
     </form>
   );

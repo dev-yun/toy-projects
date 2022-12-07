@@ -10,13 +10,20 @@ import postIcon from '../../assets/navImg/icon-edit.svg';
 import userIcon from '../../assets/navImg/icon-user.svg';
 import filledUserIcon from '../../assets/navImg/icon-user-fill.svg';
 import NavigationLink from './NavigationLink';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function Navigation() {
   const [currentPath, setCurrentPath] = useState();
+  const location = useLocation();
 
   const handlePathChange = (path) => {
     setCurrentPath(path);
   };
+
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location]);
 
   return (
     <div className={styles.wrapper}>

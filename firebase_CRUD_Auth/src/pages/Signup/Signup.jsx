@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSignup } from '../../hooks/useSignup';
 import styles from './Signup.module.css';
 
@@ -7,6 +8,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const { error, isPending, signup } = useSignup();
+  const navigate = useNavigate();
 
   const handleData = (event) => {
     if (event.target.type === 'email') {
@@ -21,6 +23,7 @@ export default function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     signup(email, password, displayName);
+    !error && !isPending && navigate('/', { replace: true });
   };
 
   return (
