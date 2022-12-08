@@ -11,25 +11,21 @@ import Signup from './pages/Signup/Signup';
 
 function App() {
   const { isAuthReady } = useAuthContext();
-
+  console.log(isAuthReady);
   return (
     <div className="App">
-      {isAuthReady ? (
-        <BrowserRouter>
-          <Header />
-          <Routes>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/chat" element={<Chat />}></Route>
-            <Route path="/post" element={<Post />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-          </Routes>
-          <Navigation />
-        </BrowserRouter>
-      ) : (
-        <h2>Loading ...</h2>
-      )}
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/chat" element={<Chat />}></Route>
+          <Route path="/post" element={<Post />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+        </Routes>
+        <Navigation />
+      </BrowserRouter>
     </div>
   );
 }

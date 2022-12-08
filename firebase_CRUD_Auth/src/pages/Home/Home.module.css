@@ -1,0 +1,31 @@
+.cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 20px;
+}
+
+label {
+  display: flex;
+  gap: 10px;
+}
+
+/* ul {
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px;
+  gap: 10px;
+}
+
+li {
+  width: 100%;
+  border: 1px solid #dddddd;
+} */

@@ -1,8 +1,6 @@
 import styles from './Header.module.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLogout } from '../../hooks/useLogout';
-import { AuthContext } from '../../context/AuthContext';
-import { useContext } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 export default function Header() {
