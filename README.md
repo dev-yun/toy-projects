@@ -1,6 +1,6 @@
 # toy-project 모음
 
-1. 영화 정보 프로젝트 ( react-query )
+1. 영화 정보 프로젝트 ( TypeScript )
 
 2. 쇼핑몰 페이지 ( Context API )
 
